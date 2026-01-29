@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "oop-bank-account"
+version = "0.1.0"
+description = "Simple OOP bank account"
+authors = ["Your Name <you@example.com>"]
+packages = [{ include = "bank_account", from = "src" }]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+pytest-cov = "^4.1"
+pylint = "^3.0"
+bandit = "^1.7"
+pip-audit = "^2.7"
+
+[tool.pytest.ini_options]
+addopts = "--cov=bank_account --cov-fail-under=90"
+
+[tool.pylint]
+disable = ["missing-module-docstring"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

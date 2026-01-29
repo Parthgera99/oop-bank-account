@@ -1,0 +1,52 @@
+name: Python CI (Poetry)
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Poetry
+        run: |
+          pip install poetry
+
+      - name: Configure Poetry
+        run: |
+          poetry config virtualenvs.create false
+
+      - name: Install dependencies
+        run: |
+          poetry install --no-interaction --no-root
+
+      - name: Run pylint (≥9.0)
+        run: |
+          poetry run pylint src/bank_account --fail-under=9.0
+
+      - name: Run tests with coverage
+        run: |
+          poetry run pytest
+
+      - name: Security scan
+        run: |
+          poetry run bandit -r src/bank_account -ll
+
+      - name: Dependency audit
+        run: |
+          poetry run pip-audit
+
+      - name: Build wheel
+        run: |
+          poetry build
