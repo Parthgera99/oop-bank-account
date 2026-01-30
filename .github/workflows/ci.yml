@@ -31,7 +31,7 @@ jobs:
         run: |
           poetry install --no-interaction --no-root
 
-      - name: Run pylint (≥9.0)
+      - name: Run pylint (≥8.0)
         run: |
           poetry run pylint src/bank_account --fail-under=9.0
 
